@@ -61,3 +61,31 @@ ballObj.prototype.creat = function(){
 		}
 	}
 }
+ballObj.prototype.creat2 = function(){
+	var www = 0;
+	var num = 0;
+	var x = 0;
+	var y = 0;
+	for(var i = 0;i<this.num;i++){
+		if(this.visible[i]){
+			this.w[i] = 0.5*this.w[i];
+			www = this.w[i];
+			x = this.x[i];
+			y = this.y[i];
+		}
+	}
+	for(var i = 0;i<this.num;i++){
+		if(!this.visible[i]){
+			this.visible[i] = true;
+			this.x[i] = x+20;
+			this.y[i] = y+20;
+			this.w[i] = www;
+			// this.r[i] = Math.pow((this.w[i]*3)/(4*Math.PI),1/3);
+			this.r[i] = Math.pow(this.w[i]/Math.PI,0.5);
+			this.v[i] = 5*Math.pow(200/this.w[i],0.5);
+			// console.log("v"+ball.v[0]);
+			this.c[i] = randomColor(0,0,0,1);
+			return;
+		}
+	}
+}

@@ -19,7 +19,6 @@ window.onload = function(){
 	can2.width = winWidth-50;
 	can2.height = winHeight-50;
 	init();
-	
 }
 
 function init(){
@@ -28,6 +27,7 @@ function init(){
 	floatage = new floatageObj();
 	floatage.init();
 	loop();
+	ball.creat();
 }
 
 function loop(){
@@ -47,7 +47,7 @@ function loop(){
 	requestAnimFrame(loop);
 }
 document.body.onclick = function(){
-	ball.creat();
+	ball.creat2();
 }
 document.onkeydown =keyDown;
 document.onkeyup =keyUp;
@@ -72,20 +72,85 @@ function keyUp(e){
 	}
 }
 function direction() {
-	if (leftDown){
-		ball.x[0]-=ball.v[0];
-		x-=ball.v[0];
-	} 
-	if (rightDown){
-		ball.x[0]+=ball.v[0];
-		x+=ball.v[0];
-	} 
-	if (upDown){
-		ball.y[0]-=ball.v[0];
-		y-=ball.v[0];
-	} 
-	if (downDown){
-		ball.y[0]+=ball.v[0];
-		y+=ball.v[0];
+	var cha = ""+leftDown+rightDown+upDown+downDown;
+	var num = 0;
+	for(var i=0;i<ball.num;i++){
+		if(ball.visible[i]){
+			num++;
+		}
 	}
+for(var i=0;i<num;i++){
+	switch(cha){
+		case "truefalsefalsefalse":
+			ball.x[i]-=1.4*ball.v[i];
+			// x-=1.4*ball.v[0];
+			break;
+		case "falsetruefalsefalse":
+			ball.x[i]+=1.4*ball.v[i];
+			// x+=1.4*ball.v[0];
+			break;
+		case "falsefalsetruefalse":
+			ball.y[i]-=1.4*ball.v[i];
+			// y-=1.4*ball.v[0];
+			break;
+		case "falsefalsefalsetrue":
+			ball.y[i]+=1.4*ball.v[i];
+			// y+=1.4*ball.v[0];
+			break;
+		case "truefalsetruefalse":
+			ball.x[i]-=ball.v[i];
+			// x-=ball.v[0];
+			ball.y[i]-=ball.v[i];
+			// y-=ball.v[0];
+			break;
+		case "falsetruetruefalse":
+			ball.x[i]+=ball.v[i];
+			// x+=ball.v[0];
+			ball.y[i]-=ball.v[i];
+			// y-=ball.v[0];
+			break;
+		case "falsetruefalsetrue":
+			ball.x[i]+=ball.v[i];
+			// x+=ball.v[0];
+			ball.y[i]+=ball.v[i];
+			// y+=ball.v[0];
+			break;
+		case "truefalsefalsetrue":
+			ball.x[i]-=ball.v[i];
+			// x-=ball.v[0];
+			ball.y[i]+=ball.v[i];
+			// y+=ball.v[0];
+			break;
+		}
+	}
+		switch(cha){
+			case "truefalsefalsefalse":
+			x-=1.4*ball.v[0];
+			break;
+		case "falsetruefalsefalse":
+			x+=1.4*ball.v[0];
+			break;
+		case "falsefalsetruefalse":
+			y-=1.4*ball.v[0];
+			break;
+		case "falsefalsefalsetrue":
+			y+=1.4*ball.v[0];
+			break;
+		case "truefalsetruefalse":
+			x-=ball.v[0];
+			y-=ball.v[0];
+			break;
+		case "falsetruetruefalse":
+			x+=ball.v[0];
+			y-=ball.v[0];
+			break;
+		case "falsetruefalsetrue":
+			x+=ball.v[0];
+			y+=ball.v[0];
+			break;
+		case "truefalsefalsetrue":
+			x-=ball.v[0];
+			y+=ball.v[0];
+			break;
+		}
 } 

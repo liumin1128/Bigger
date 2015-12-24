@@ -1,34 +1,39 @@
-window.requestAnimFrame = (function(){
-  return  window.requestAnimationFrame       ||
-          window.webkitRequestAnimationFrame ||
-          window.mozRequestAnimationFrame    ||
-          function( callback ){
-            window.setTimeout(callback, 1000 / 60);
-          };
+window.requestAnimFrame = (function() {
+	return window.requestAnimationFrame ||
+		window.webkitRequestAnimationFrame ||
+		window.mozRequestAnimationFrame ||
+		function(callback) {
+			window.setTimeout(callback, 1000 / 60);
+		};
 })();
-function randomColor(r,g,b,a){
-	var R = r||Math.floor(Math.random()*255);
-    var G = g||Math.floor(Math.random()*255);
-    var B = b||Math.floor(Math.random()*255);
-    var A = a||Math.random();
-    return "rgba("+R+","+G+","+B+","+A+")";
+
+function randomColor(r, g, b, a) {
+	var R = r || Math.floor(Math.random() * 255);
+	var G = g || Math.floor(Math.random() * 255);
+	var B = b || Math.floor(Math.random() * 255);
+	var A = a || Math.random();
+	return "rgba(" + R + "," + G + "," + B + "," + A + ")";
 }
+
 function lerpDistance(aim, cur, ratio) {
 	var delta = cur - aim;
 	return aim + delta * ratio;
 }
+
 function lerpAngle(a, b, t) {
 	var d = b - a;
 	if (d > Math.PI) d = d - 2 * Math.PI;
 	if (d < -Math.PI) d = d + 2 * Math.PI;
 	return a + d * t;
 }
+
 function calLength2(x1, y1, x2, y2) {
-	var xdiff = x2 - x1;            // 计算两个点的横坐标之差
-	var ydiff = y2 - y1;            // 计算两个点的纵坐标之差
+	var xdiff = x2 - x1; // 计算两个点的横坐标之差
+	var ydiff = y2 - y1; // 计算两个点的纵坐标之差
 	return Math.pow((xdiff * xdiff + ydiff * ydiff), 0.5);
 	// return Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2);
 }
+
 function findDimensions() //函数：获取尺寸 
 {
 	//获取窗口宽度 
@@ -48,6 +53,7 @@ function findDimensions() //函数：获取尺寸
 	}
 	// console.log(winHeight,winWidth);
 }
+
 function pointToLine(x1, y1, x2, y2, x0, y0) {
 	var space = 0;
 	var a = 0;
@@ -83,15 +89,54 @@ function lineSpace(x1, y1, x2, y2) {
 	lineLength = Math.sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
 	return lineLength;
 }
-function windowToCanvas(x,y){
-    var bbox = canvas.getBoundingClientRect();
-    return{
-        x:x-bbox.left,
-        y:y-bbox.top
-    }
+
+function windowToCanvas(x, y) {
+	var bbox = canvas.getBoundingClientRect();
+	return {
+		x: x - bbox.left,
+		y: y - bbox.top
+	}
 }
-function getKeyCode(e){
-　 var e=e||event;
-　 var keyCode=e.keyCode||e.which||e.charCode;
+
+function getKeyCode(e) {　
+	var e = e || event;　
+	var keyCode = e.keyCode || e.which || e.charCode;
 	// alert(keyCode);
+}
+
+function drawBallPath(x, y, r) {
+	ctx.beginPath();
+	ctx.arc(x, y, r, 0, PI * 2);
+	ctx.closePath();
+}
+
+function drawTrianglePath(x, y, r) {
+	ctx.beginPath();
+	ctx.moveTo(x, y - r);
+	ctx.lineTo(x + Math.sqrt(3) * r / 2, y + r / 2);
+	ctx.lineTo(x - Math.sqrt(3) * r / 2, y + r / 2);
+	ctx.closePath();
+}
+
+function drawSquraPath(x, y, r) {
+	ctx.beginPath();
+	ctx.moveTo(x - r / 2, y - r / 2);
+	ctx.lineTo(x + r / 2, y - r / 2);
+	ctx.lineTo(x + r / 2, y + r / 2);
+	ctx.lineTo(x - r / 2, y + r / 2);
+	ctx.closePath();
+}
+
+function drawStarPath(b, x, y, R, r) { //需要传入边数,x.y坐标,内外圆和内圆
+
+	ctx.beginPath();
+	for (var i = 0; i < b; i++) {
+		ctx.lineTo(
+			Math.cos((90 / b + i * 360 / b) / 180 * 　Math.PI) * R + x, -Math.sin((90 / b + i * 360 / b) / 180 * 　Math.PI) * R + y
+		)
+		ctx.lineTo(
+			Math.cos((270 / b + i * 360 / b) / 180 * 　Math.PI) * r + x, -Math.sin((270 / b + i * 360 / b) / 180 * 　Math.PI) * r + y
+		)
+	}
+	ctx.closePath();
 }

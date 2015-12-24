@@ -6,7 +6,7 @@ var floatageObj = function(){
 	this.r = [];
 	this.visible = [];
 }
-floatageObj.prototype.num = 500;
+floatageObj.prototype.num = 200;
 floatageObj.prototype.init = function(){
 	for(var i = 0;i<this.num;i++){
 		this.creat(i);
@@ -18,7 +18,8 @@ floatageObj.prototype.draw = function(){
 			ctx.save();
 			ctx.fillStyle = this.c[i];
 			ctx.beginPath();
-			ctx.arc(this.x[i],this.y[i],this.r[i],0,Math.PI*2);
+			drawStarPath(6,this.x[i],this.y[i],this.r[i],this.r[i]-0.4);
+			// ctx.arc(this.x[i],this.y[i],this.r[i],0,Math.PI*2);
 			ctx.closePath();
 			ctx.fill();
 			ctx.restore;
